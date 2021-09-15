@@ -17,6 +17,7 @@ def count_pixels(image: np.ndarray, hex_color: list[str]) -> int:
     return np.count_nonzero(np.all(image == bgr_color, axis=2))
 
 
+# TODO: а если придет изображение с таким же названием?
 async def download_file(part: BodyPartReader, download_path: str, filename: str) -> None:
     size = 0
     with open(os.path.join(download_path, filename), 'wb') as f:
