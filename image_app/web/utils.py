@@ -2,14 +2,9 @@ import os
 import io
 
 import numpy as np
-from cv2 import imread
+from cv2 import imread, imdecode
 from webcolors import hex_to_rgb
 from aiohttp import BodyPartReader
-
-
-# TODO: ловить эксепшн при некорректном изображении
-def load_image_np(image_path: str) -> np.ndarray:
-    return imread(image_path)
 
 
 def count_pixels(image: np.ndarray, hex_color: list[str]) -> int:
@@ -18,19 +13,7 @@ def count_pixels(image: np.ndarray, hex_color: list[str]) -> int:
     return np.count_nonzero(np.all(image == bgr_color, axis=2))
 
 
-# TODO: а если придет изображение с таким же названием?
-async def download_file(part: BodyPartReader, download_path: str, filename: str) -> None:
-    size = 0
-    with open(os.path.join(download_path, filename), 'wb') as f:
-        while True:
-            chunk = await part.read_chunk()  # 8192 bytes by default.
-            if not chunk:
-                break
-            size += len(chunk)
-            f.write(chunk)
-        f.close()
-
-
+# TODO: ловить эксепшн при некорректном изображении
 async def load_image(part: BodyPartReader):
     size = 0
     img_stream = io.BytesIO()
@@ -40,4 +23,5 @@ async def load_image(part: BodyPartReader):
             break
         size += len(chunk)
         img_stream.write(chunk)
-    return np.frombuffer(img_stream.read(), np.uint8)
+    img_stream.seek(0)
+    return imdecode(np.frombuffer(img_stream.read(), np.uint8), 1)
