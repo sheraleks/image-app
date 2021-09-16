@@ -1,4 +1,5 @@
 import os
+import io
 
 import numpy as np
 from cv2 import imread
@@ -28,3 +29,15 @@ async def download_file(part: BodyPartReader, download_path: str, filename: str)
             size += len(chunk)
             f.write(chunk)
         f.close()
+
+
+async def load_image(part: BodyPartReader):
+    size = 0
+    img_stream = io.BytesIO()
+    while True:
+        chunk = await part.read_chunk()
+        if not chunk:
+            break
+        size += len(chunk)
+        img_stream.write(chunk)
+    return np.frombuffer(img_stream.read(), np.uint8)

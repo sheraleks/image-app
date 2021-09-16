@@ -3,7 +3,7 @@ import os
 from aiohttp import MultipartReader
 from aiohttp.web import View, json_response, HTTPBadRequest
 
-from image_app.web.utils import download_file, load_image_np, count_pixels
+from image_app.web.utils import download_file, load_image_np, count_pixels, load_image
 
 
 class BlackWhiteView(View):
