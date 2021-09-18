@@ -13,3 +13,4 @@ def get_config(path):
 
 
 config = get_config(config_path)
+config["file_max_size"] *= 1024**2
