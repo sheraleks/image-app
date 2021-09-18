@@ -1,8 +1,8 @@
-from aiohttp.web import View, json_response
+from aiohttp.web import View
 from aiohttp_apispec import docs, form_schema
 
 from image_app.pixels.schemas import BlackWhiteSchema, CustomColorSchema
-from image_app.web.utils import count_pixels
+from image_app.web.utils import count_pixels, json_response
 
 
 class BlackWhiteView(View):

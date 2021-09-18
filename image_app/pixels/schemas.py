@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, pre_load
+from marshmallow import Schema, fields
 from marshmallow.validate import Regexp
 
 from image_app.pixels.custom_fields import Image

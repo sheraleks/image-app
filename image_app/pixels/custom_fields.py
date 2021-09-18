@@ -1,5 +1,5 @@
 from aiohttp.web_request import FileField
-from marshmallow import fields, ValidationError, pre_load
+from marshmallow import fields, ValidationError
 
 from image_app.web.utils import load_image
 
