@@ -35,12 +35,14 @@ def error_json_response(
     message: Optional[str] = None,
     data: Optional[dict] = None,
 ):
-    if data is None:
-        data = {}
+    response_data = {
+        "status": status,
+    }
+    if message:
+        response_data["message"] = message
+    if data:
+        response_data["data"] = data
     return aiohttp_json_response(
         status=http_status,
-        data={
-            'status': status,
-            'message': str(message),
-            'data': data,
-        })
+        data=response_data,
+    )
