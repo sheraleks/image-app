@@ -1,23 +1,24 @@
-from aiohttp import MultipartReader
-from aiohttp.web import View, json_response, HTTPBadRequest
+from aiohttp.web import View, json_response
+from aiohttp_apispec import docs, form_schema
 
-from image_app.web.utils import count_pixels, load_image
+from image_app.pixels.schemas import BlackWhiteSchema, CustomColorSchema
+from image_app.web.utils import count_pixels
 
 
 class BlackWhiteView(View):
-    # TODO: поле image обязательно
+    @docs(
+        tags=["image"],
+        summary="Black or white",
+        description="Determines the major pixel color between black and white in the picture",
+    )
+    @form_schema(BlackWhiteSchema)
     async def post(self):
-        try:
-            reader: MultipartReader = await self.request.multipart()
-        except AssertionError as exc:
-            raise HTTPBadRequest(reason=exc.args[0])
-
-        async for part in reader:
-            if part.name == "image":
-                image_np = await load_image(part)
-        white_pixels_count = count_pixels(image_np, "#FFFFFF")
-        black_pixels_count = count_pixels(image_np, "#000000")
-        if white_pixels_count > black_pixels_count:
+        image = self.request["form"]["image"]
+        white_pixels_count = count_pixels(image, "#FFFFFF")
+        black_pixels_count = count_pixels(image, "#000000")
+        if not white_pixels_count and not black_pixels_count:
+            major_color = "neither"
+        elif white_pixels_count > black_pixels_count:
             major_color = "white"
         elif white_pixels_count < black_pixels_count:
             major_color = "black"
@@ -31,19 +32,17 @@ class BlackWhiteView(View):
 
 
 class CustomColorView(View):
-    # TODO: поля image и hex_color обязательны
-    # TODO: валидация поля hex_color
+    @docs(
+        tags=["image"],
+        summary="Custom color count",
+        description="Counts pixels of color hex_color",
+    )
+    @form_schema(CustomColorSchema)
     async def post(self):
-        try:
-            reader: MultipartReader = await self.request.multipart()
-        except AssertionError as exc:
-            raise HTTPBadRequest(reason=exc.args[0])
-        async for part in reader:
-            if part.name == "image":
-                image_np = await load_image(part)
-            elif part.name == "hex_color":
-                hex_color = (await part.read()).decode()
-        pixels_count = count_pixels(image_np, hex_color)
+        form = self.request["form"]
+        image = form["image"]
+        hex_color = form["hex_color"]
+        pixels_count = count_pixels(image, hex_color)
         return json_response(
             data={
                 "pixels_count": pixels_count

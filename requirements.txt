@@ -3,3 +3,5 @@ numpy==1.21.2
 opencv-python==4.5.3.56
 webcolors==1.11.1
 PyYAML==5.4.1
+aiohttp-apispec==2.2.1
+marshmallow==3.13.0
