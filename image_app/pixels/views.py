@@ -1,7 +1,8 @@
 from aiohttp.web import View
 from aiohttp_apispec import docs, form_schema
 
-from image_app.pixels.schemas import BlackWhiteSchema, CustomColorSchema
+from image_app.pixels.schemas import BlackWhiteSchema, CustomColorSchema, BlackWhiteOkResponseSchema, \
+    CustomColorOkResponseSchema
 from image_app.web.utils import count_pixels, json_response
 
 
@@ -10,6 +11,12 @@ class BlackWhiteView(View):
         tags=["image"],
         summary="Black or white",
         description="Determines the major pixel color between black and white in the picture",
+        responses={
+            200: {"description": "Ok. Major pixel color determined", "schema": BlackWhiteOkResponseSchema},
+            413: {"description": "Entity too large"},
+            422: {"description": "Unprocessable entity"},
+            500: {"description": "Server error"},
+        },
     )
     @form_schema(BlackWhiteSchema)
     async def post(self):
@@ -36,6 +43,12 @@ class CustomColorView(View):
         tags=["image"],
         summary="Custom color count",
         description="Counts pixels of color hex_color",
+        responses={
+            200: {"description": "Ok. Pixels of color hex_color counted", "schema": CustomColorOkResponseSchema},
+            413: {"description": "Entity too large"},
+            422: {"description": "Unprocessable entity"},
+            500: {"description": "Server error"},
+        },
     )
     @form_schema(CustomColorSchema)
     async def post(self):
