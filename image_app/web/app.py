@@ -16,8 +16,8 @@ def create_app():
         app=app,
         title="Image APP",
         version="v1",
-        url="/docs/json",
-        swagger_path="/docs",
+        url="/api/docs/json",
+        swagger_path="/api/docs",
     )
     return app
 
