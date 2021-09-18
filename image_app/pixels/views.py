@@ -3,6 +3,7 @@ from aiohttp_apispec import docs, form_schema
 
 from image_app.pixels.schemas import BlackWhiteSchema, CustomColorSchema, BlackWhiteOkResponseSchema, \
     CustomColorOkResponseSchema
+from image_app.web.schemas import ErrorResponseSchema
 from image_app.web.utils import count_pixels, json_response
 
 
@@ -13,9 +14,9 @@ class BlackWhiteView(View):
         description="Determines the major pixel color between black and white in the picture",
         responses={
             200: {"description": "Ok. Major pixel color determined", "schema": BlackWhiteOkResponseSchema},
-            413: {"description": "Entity too large"},
-            422: {"description": "Unprocessable entity"},
-            500: {"description": "Server error"},
+            413: {"description": "Image is too large", "schema": ErrorResponseSchema},
+            422: {"description": "Params values are not as expected", "schema": ErrorResponseSchema},
+            500: {"description": "Server error", "schema": ErrorResponseSchema},
         },
     )
     @form_schema(BlackWhiteSchema)
@@ -45,9 +46,9 @@ class CustomColorView(View):
         description="Counts pixels of color hex_color",
         responses={
             200: {"description": "Ok. Pixels of color hex_color counted", "schema": CustomColorOkResponseSchema},
-            413: {"description": "Entity too large"},
-            422: {"description": "Unprocessable entity"},
-            500: {"description": "Server error"},
+            413: {"description": "Image is too large", "schema": ErrorResponseSchema},
+            422: {"description": "Params values are not as expected", "schema": ErrorResponseSchema},
+            500: {"description": "Server error", "schema": ErrorResponseSchema},
         },
     )
     @form_schema(CustomColorSchema)
