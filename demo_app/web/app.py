@@ -6,7 +6,7 @@ from image_app.web.middlewares import error_middleware
 from image_app.web.routes import setup_routes
 
 
-def create_app() -> web.Application:
+def create_app():
     app = web.Application(
         middlewares=[error_middleware, validation_middleware],
         client_max_size=config["file_max_size"],

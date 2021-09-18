@@ -1,13 +1,16 @@
 import json
+from typing import Callable
 
 from aiohttp import web
 from aiohttp.web_exceptions import HTTPRequestEntityTooLarge, HTTPUnprocessableEntity, HTTPNotFound
+from aiohttp.web_request import Request
+from aiohttp.web_response import Response
 
 from image_app.web.utils import error_json_response
 
 
 @web.middleware
-async def error_middleware(request, handler):
+async def error_middleware(request: Request, handler: Callable) -> Response:
     try:
         response = await handler(request)
         return response

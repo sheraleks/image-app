@@ -14,7 +14,7 @@ def count_pixels(image: np.ndarray, hex_color: list[str]) -> int:
     return np.count_nonzero(np.all(image == bgr_color, axis=2))
 
 
-def load_image(img_file: io.BufferedRandom):
+def load_image(img_file: io.BufferedRandom) -> np.ndarray:
     return imdecode(np.frombuffer(img_file.read(), np.uint8), 1)
 
 
@@ -34,7 +34,7 @@ def error_json_response(
     status: str = "error",
     message: Optional[str] = None,
     data: Optional[dict] = None,
-):
+) -> Response:
     response_data = {
         "status": status,
     }
