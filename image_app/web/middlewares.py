@@ -1,5 +1,4 @@
 import json
-import logging
 from typing import Callable
 
 from aiohttp import web
@@ -8,12 +7,8 @@ from aiohttp.web_exceptions import HTTPRequestEntityTooLarge, HTTPUnprocessableE
 from aiohttp.web_request import Request
 from aiohttp.web_response import Response
 
+from image_app import logger
 from image_app.web.utils import error_json_response
-
-logger = logging.getLogger(__name__)
-logging.basicConfig(
-    level=logging.INFO,
-)
 
 
 @web.middleware
