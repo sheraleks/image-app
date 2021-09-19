@@ -1,1 +1,14 @@
 /archive/
+/venv/
+/.idea/
+image_app/__pycache__
+image_app/pixels/__pycache__
+image_app/web/__pycache__
+demo_app/__pycache__
+demo_app/demo/__pycache__
+demo_app/web/__pycache__
+demo_app/.DS_Store
+tests/__pycache__
+tests/image_app/__pycache__
+tests/.DS_Store
+.DS_Store
