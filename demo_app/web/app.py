@@ -1,23 +1,13 @@
+import jinja2
 from aiohttp import web
-from aiohttp_apispec import setup_aiohttp_apispec, validation_middleware
+import aiohttp_jinja2
 
-from image_app.config import config
-from image_app.web.middlewares import error_middleware
-from image_app.web.routes import setup_routes
+from demo_app.web.routes import setup_routes
 
 
-def create_app():
-    app = web.Application(
-        middlewares=[error_middleware, validation_middleware],
-        client_max_size=config["file_max_size"],
-    )
+def create_app() -> web.Application:
+    app = web.Application()
     setup_routes(app)
-    setup_aiohttp_apispec(
-        app=app,
-        title="Image APP",
-        version="v1",
-        url="/api/docs/json",
-        swagger_path="/api/docs",
-    )
+    aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader("demo_app/templates"))
     return app
 

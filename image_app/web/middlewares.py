@@ -2,7 +2,8 @@ import json
 from typing import Callable
 
 from aiohttp import web
-from aiohttp.web_exceptions import HTTPRequestEntityTooLarge, HTTPUnprocessableEntity, HTTPNotFound
+from aiohttp.web_exceptions import HTTPRequestEntityTooLarge, HTTPUnprocessableEntity, HTTPNotFound, \
+    HTTPMethodNotAllowed
 from aiohttp.web_request import Request
 from aiohttp.web_response import Response
 
@@ -18,6 +19,11 @@ async def error_middleware(request: Request, handler: Callable) -> Response:
         return error_json_response(
             http_status=404,
             status="not_found",
+        )
+    except HTTPMethodNotAllowed as e:
+        return error_json_response(
+            http_status=405,
+            status="not_allowed",
         )
     except HTTPRequestEntityTooLarge as e:
         return error_json_response(
@@ -35,5 +41,5 @@ async def error_middleware(request: Request, handler: Callable) -> Response:
         return error_json_response(
             http_status=500,
             status="internal_server_error",
-            message=e.text,
+            message=str(e),
         )
