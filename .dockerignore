@@ -11,5 +11,3 @@ tests/__pycache__
 tests/image_app/__pycache__
 tests/.DS_Store
 .DS_Store
-__pycache__
-.coverage
