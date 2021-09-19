@@ -15,7 +15,3 @@ test: ## run tests with pytest
 
 run: ## run in local
 	venv/bin/python -m main
-
-run_in_docker: ## run in docker
-	docker-compose build
-	docker-compose up -d
