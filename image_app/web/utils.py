@@ -46,3 +46,4 @@ def error_json_response(
         status=http_status,
         data=response_data,
     )
+
