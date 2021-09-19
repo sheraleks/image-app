@@ -8,4 +8,4 @@ from demo_app.web.app import create_app as create_demo_app
 if __name__ == "__main__":
     app = create_app()
     app.add_subapp("/demo", create_demo_app())
-    web.run_app(app, port=config["server"]["port"])
+    web.run_app(app, port=config["port"])

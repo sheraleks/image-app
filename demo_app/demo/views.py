@@ -12,7 +12,7 @@ class BlackWhiteView(View):
         return {
             "title": "Black or white pixels",
             "upload_route": "/black_white",
-            "port": config["server"]["port"],
+            "port": config["port"],
         }
 
     @aiohttp_jinja2.template("index.html")
@@ -20,7 +20,7 @@ class BlackWhiteView(View):
         data = await self.request.post()
         async with aiohttp.ClientSession() as session:
             response = await session.post(
-                f"http://0.0.0.0:{config['server']['port']}/api/black_white",
+                f"http://0.0.0.0:{config['port']}/api/black_white",
                 data={
                     "image": getattr(data["image"], "file", None)
                 })
@@ -30,7 +30,7 @@ class BlackWhiteView(View):
         return {
             "title": "Black or white pixels",
             "upload_route": "/black_white",
-            "port": config["server"]["port"],
+            "port": config["port"],
             "result": result,
         }
 
@@ -41,7 +41,7 @@ class CustomColorView(View):
         return {
             "title": "Count custom color pixels",
             "upload_route": "/custom_color",
-            "port": config["server"]["port"],
+            "port": config["port"],
             "needs_hex_color": True,
         }
 
@@ -51,7 +51,7 @@ class CustomColorView(View):
         hex_color = data["hex_color"]
         async with aiohttp.ClientSession() as session:
             response = await session.post(
-                f"http://0.0.0.0:{config['server']['port']}/api/custom_color",
+                f"http://0.0.0.0:{config['port']}/api/custom_color",
                 data={
                     "image": getattr(data["image"], "file", None),
                     "hex_color": hex_color
@@ -62,7 +62,7 @@ class CustomColorView(View):
         return {
             "title": "Count custom color pixels",
             "upload_route": "/custom_color",
-            "port": config["server"]["port"],
+            "port": config["port"],
             "needs_hex_color": True,
             "result": result,
         }
