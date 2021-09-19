@@ -5,3 +5,6 @@ webcolors==1.11.1
 PyYAML==5.4.1
 aiohttp-apispec==2.2.1
 marshmallow==3.13.0
+aiohttp-jinja2==1.5
+jinja2==3.0.1
+Pillow==8.3.2
