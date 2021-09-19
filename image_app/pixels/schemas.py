@@ -25,4 +25,4 @@ class CustomColorSchema(BlackWhiteSchema):
 
 
 class CustomColorOkResponseSchema(Schema):
-    major_color = fields.Int(required=True)
+    pixels_count = fields.Int(required=True)
