@@ -1,17 +1,21 @@
-help: ## show this help
+help:          ## show this help
 	@echo 'usage: make [target] ...'
 	@echo ''
 	@echo 'targets:'
 	@egrep '^(.+)\:\ .*##\ (.+)' ${MAKEFILE_LIST} | sed 's/:.*##/#/' | column -t -c 2 -s '#'
 
-venv:  ## create python env
+venv:          ## create python env
 	virtualenv -p ~/.pyenv/versions/3.9.6/bin/python venv
 
-install:  ## install requirements
+install:       ## install requirements
 	venv/bin/pip install -r requirements.txt
 
-test: ## run tests with pytest
+test:          ## run tests with pytest
 	venv/bin/pytest --cov=image_app tests
 
-run: ## run in local
+run:           ## run in local
 	venv/bin/python -m main
+
+run_in_docker: ## run in docker
+	docker-compose build
+	docker-compose up -d

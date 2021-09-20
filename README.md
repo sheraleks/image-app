@@ -47,9 +47,12 @@
 ├── config                     # основной конфиг проекта
 │   └── config.yml
 ├── .gitignore
+├── .dockerignore
 ├── README.md
 ├── main.py 
 ├── requirements.txt
+├── docker-compose.yml
+├── Dockerfile
 └── Makefile
 ```
 
@@ -60,6 +63,7 @@ venv            создание виртуального окружения
 install         установка зависимостей
 test            запуск тестов
 run             запуск сервиса
+run_in_docker   запуск сервиса в docker
 ```
 Например, make venv
 
